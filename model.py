@@ -37,7 +37,7 @@ class DecoderRNN(nn.Module):
         self.linear = nn.Linear(hidden_size, vocab_size) 
 
         # initialize the hidden state (see code below)
-        self.hidden = self.init_hidden()
+        #self.hidden = self.init_hidden()
 
         
     def init_hidden(self):
