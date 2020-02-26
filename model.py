@@ -69,13 +69,13 @@ class DecoderRNN(nn.Module):
         average.
         '''
         outs = []
-        while(len(outs)!=max_len):
-            out = self.linear(out.squeeze(dim=1))
-            _ , idx = torch.max(out,1)
-            outs.append(idx.cpu().numpy()[0].item())
+        while(len(outs)!=max_len+1):
+            out, states = self.lstm(inputs,states)
+            # squeeze one dimension away 
+            outputs = self.linear(out.squeeze(dim=1))
+            _ , idx = torch.max(outputs,1)
+            outs.append(idx.cpu().numpy()[0].item()) #numpy to scalar
             if(idx==1):
                 break
             inputs = self.word_embeddings(idx).unsqueeze(1)
-            
-            
         return outs
